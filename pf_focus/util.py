@@ -26,6 +26,16 @@ class DataList(list, DataNode):
                 data.append(value)
         return data
 
+class DataMap(dict, DataNode):
+    @property
+    def data(self):
+        data = {}
+        for key, value in self.items():
+            if isinstance(value, DataNode):
+                data[key] = value.data
+            else:
+                data[key] = value
+        return data
 
 def dict_to_dict(data, attributes):
     data_items = [(attribute, data.get(attribute, '')) for attribute in attributes]
