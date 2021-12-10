@@ -395,6 +395,14 @@ class PfSenseSystem(PfSenseNode):
     _language = PfSenseString
     _dnsserver = [PfSenseString]
 
+class PfSenseCaptiveZone(PfSenseNode):
+    _zone = PfSenseString
+    _enable = PfSenseFlag
+    _interface = PfSenseString
+
+class PfSenseCaptivePortals(PfSenseNode):
+    _tatdf = PfSenseCaptiveZone
+
 class PfSenseConfig(PfSenseNode):
     _version = PfSenseString
     _system = PfSenseSystem
@@ -411,6 +419,7 @@ class PfSenseConfig(PfSenseNode):
     _openvpn = PfSenseOpenVpn
     _syslog = PfSenseSyslog
     _sysctl = PfSenseSysCtl
+    _captiveportal = {"name": PfSenseCaptiveZone}
 
 class PfSenseDocument(PfSenseNode):
     _pfsense = PfSenseConfig

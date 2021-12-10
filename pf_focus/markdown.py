@@ -84,6 +84,15 @@ def output_markdown(doc, stream):
     output_markdown_table(stream, ('Option', 'Value'), info.items())
     stream.write("\n")
 
+    if hasattr_r(doc.pfsense, 'captiveportal'):
+        stream.write("## Captive Portals\n")
+        print(doc.pfsense.captiveportal.data)
+        captivezones = sorted(doc.pfsense.captiveportal.data.values(), key=lambda captiveportal: captiveportal['zone'])
+
+        captivezones = [dict_to_list(captiveportal_data, ('zone', 'interface', 'enable')) for captiveportal_data in captivezones]
+        output_markdown_table(stream, ('Name', 'Interface', 'Enabled'), captivezones)
+        stream.write("\n")
+
     if hasattr_r(doc.pfsense, 'interfaces'):
         stream.write("## Interfaces\n")
         interfaces = sorted(doc.pfsense.interfaces.data.items(), key=lambda interface: interface[0])
